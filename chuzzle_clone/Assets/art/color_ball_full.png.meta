@@ -1,20 +1,20 @@
 fileFormatVersion: 2
 guid: 261080c7af75c5d4c99bc3337dafe068
-timeCreated: 1457865047
+timeCreated: 1457868151
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
-    21300000: ball_01
-    21300002: ball_02
-    21300004: ball_03
-    21300006: ball_04
-    21300008: ball_05
-    21300010: ball_06
-    21300012: ball_07
-    21300014: ball_08
-    21300016: ball_09
-    21300018: ball_10
-    21300020: ball_11
+    21300000: ball_00
+    21300002: ball_01
+    21300004: ball_02
+    21300006: ball_03
+    21300008: ball_04
+    21300010: ball_05
+    21300012: ball_06
+    21300014: ball_07
+    21300016: ball_08
+    21300018: white_ball
+    21300020: ball_09
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -61,10 +61,36 @@ TextureImporter:
   buildTargetSettings: []
   spriteSheet:
     sprites:
-    - name: ball_01
+    - name: ball_00
       rect:
         serializedVersion: 2
         x: 19
+        y: 435
+        width: 103
+        height: 110
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -30.5, y: 53}
+        - {x: -51.5, y: 42}
+        - {x: -51.5, y: -28}
+        - {x: -32.5, y: -48}
+        - {x: -22.5, y: -54}
+        - {x: -16.5, y: -55}
+        - {x: 49.5, y: -55}
+        - {x: 51.5, y: -52}
+        - {x: 51.5, y: 31}
+        - {x: 34.5, y: 53}
+      - - {x: -31.5, y: 49}
+        - {x: -28.5, y: 51}
+        - {x: -30.5, y: 55}
+        - {x: -35.5, y: 55}
+        - {x: -35.5, y: 54}
+    - name: ball_01
+      rect:
+        serializedVersion: 2
+        x: 159
         y: 435
         width: 103
         height: 110
@@ -90,7 +116,7 @@ TextureImporter:
     - name: ball_02
       rect:
         serializedVersion: 2
-        x: 159
+        x: 299
         y: 435
         width: 103
         height: 110
@@ -116,8 +142,8 @@ TextureImporter:
     - name: ball_03
       rect:
         serializedVersion: 2
-        x: 299
-        y: 435
+        x: 19
+        y: 295
         width: 103
         height: 110
       alignment: 0
@@ -142,7 +168,7 @@ TextureImporter:
     - name: ball_04
       rect:
         serializedVersion: 2
-        x: 19
+        x: 159
         y: 295
         width: 103
         height: 110
@@ -168,8 +194,31 @@ TextureImporter:
     - name: ball_05
       rect:
         serializedVersion: 2
-        x: 159
-        y: 295
+        x: 296
+        y: 294
+        width: 110
+        height: 111
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -54, y: 55.5}
+        - {x: -55, y: 49.5}
+        - {x: -55, y: -41.5}
+        - {x: -37, y: -55.5}
+        - {x: 55, y: -55.5}
+        - {x: 55, y: 48.5}
+        - {x: 53, y: 55.5}
+      - - {x: -32, y: 49.5}
+        - {x: -29, y: 51.5}
+        - {x: -31, y: 55.5}
+        - {x: -36, y: 55.5}
+        - {x: -36, y: 54.5}
+    - name: ball_06
+      rect:
+        serializedVersion: 2
+        x: 19
+        y: 155
         width: 103
         height: 110
       alignment: 0
@@ -191,33 +240,10 @@ TextureImporter:
         - {x: -30.5, y: 55}
         - {x: -35.5, y: 55}
         - {x: -35.5, y: 54}
-    - name: ball_06
-      rect:
-        serializedVersion: 2
-        x: 296
-        y: 294
-        width: 110
-        height: 111
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -54, y: 55.5}
-        - {x: -55, y: 49.5}
-        - {x: -55, y: -41.5}
-        - {x: -37, y: -55.5}
-        - {x: 55, y: -55.5}
-        - {x: 55, y: 48.5}
-        - {x: 53, y: 55.5}
-      - - {x: -32, y: 49.5}
-        - {x: -29, y: 51.5}
-        - {x: -31, y: 55.5}
-        - {x: -36, y: 55.5}
-        - {x: -36, y: 54.5}
     - name: ball_07
       rect:
         serializedVersion: 2
-        x: 19
+        x: 159
         y: 155
         width: 103
         height: 110
@@ -243,32 +269,6 @@ TextureImporter:
     - name: ball_08
       rect:
         serializedVersion: 2
-        x: 159
-        y: 155
-        width: 103
-        height: 110
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline:
-      - - {x: -30.5, y: 53}
-        - {x: -51.5, y: 42}
-        - {x: -51.5, y: -28}
-        - {x: -32.5, y: -48}
-        - {x: -22.5, y: -54}
-        - {x: -16.5, y: -55}
-        - {x: 49.5, y: -55}
-        - {x: 51.5, y: -52}
-        - {x: 51.5, y: 31}
-        - {x: 34.5, y: 53}
-      - - {x: -31.5, y: 49}
-        - {x: -28.5, y: 51}
-        - {x: -30.5, y: 55}
-        - {x: -35.5, y: 55}
-        - {x: -35.5, y: 54}
-    - name: ball_09
-      rect:
-        serializedVersion: 2
         x: 299
         y: 155
         width: 103
@@ -291,7 +291,7 @@ TextureImporter:
         - {x: -30.5, y: 55}
         - {x: -35.5, y: 55}
         - {x: -35.5, y: 54}
-    - name: ball_10
+    - name: white_ball
       rect:
         serializedVersion: 2
         x: 19
@@ -317,7 +317,7 @@ TextureImporter:
         - {x: -30.5, y: 55}
         - {x: -35.5, y: 55}
         - {x: -35.5, y: 54}
-    - name: ball_11
+    - name: ball_09
       rect:
         serializedVersion: 2
         x: 159
