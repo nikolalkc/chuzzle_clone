@@ -6,6 +6,7 @@ public class game_control : MonoBehaviour {
     public int grid_width = 5;
     public int grid_height = 7;
     public float grid_spacing = 1f;
+    public GameObject test_ball;
 	
 	void Start () {
         generate_matrix();
@@ -24,6 +25,11 @@ public class game_control : MonoBehaviour {
                 generic_ball.transform.position = new Vector3(i * grid_spacing, j * grid_spacing, 0) + grid_spawn_transform.position;
             }
         }
+    }
+
+    public static GameObject[] find_all_balls()
+    {
+        return GameObject.FindGameObjectsWithTag("ball");
     }
 
 }
