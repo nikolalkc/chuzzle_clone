@@ -7,7 +7,9 @@ public class game_control : MonoBehaviour {
     public int grid_height = 7;
     public float grid_spacing = 1f;
     public GameObject test_ball;
-	
+	public static Vector3 mouse_position_when_clicked;
+	public static bool dragging_balls_active = false;
+	public static Vector3 drag_offset;
 	void Start () {
         generate_matrix();
 	}
@@ -27,9 +29,43 @@ public class game_control : MonoBehaviour {
         }
     }
 
-    public static GameObject[] find_all_balls()
+    public static GameObject[] all_balls()
     {
         return GameObject.FindGameObjectsWithTag("ball");
     }
+
+	public static Vector3 mouse_position() {
+		Vector3 converted_mouse_pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+		converted_mouse_pos.z = -1;
+
+		return converted_mouse_pos;
+	}
+
+	public static ball get_ball(GameObject g) {
+		return g.GetComponent<ball>();
+	}
+
+	public static void ball_is_movable(GameObject ball, bool is_movable) {
+		game_control.get_ball(ball).is_moving = is_movable;
+	}
+
+	public static bool ball_is_movable(GameObject ball) {
+		return game_control.get_ball(ball).is_moving;
+	}
+
+	public static void store_mouse_position_when_clicked() {
+		mouse_position_when_clicked = game_control.mouse_position();
+	}
+
+
+	void Update() {
+		if (dragging_balls_active) {
+			float distance_x = game_control.mouse_position().x - mouse_position_when_clicked.x;
+			float distance_y = game_control.mouse_position().y - mouse_position_when_clicked.y;
+			//print("X:" + distance_x + " Y:" + distance_y);
+			drag_offset = new Vector3(distance_x, distance_y, 0);
+		}
+	}
+
 
 }

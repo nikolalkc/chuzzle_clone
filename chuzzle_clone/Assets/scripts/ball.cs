@@ -6,7 +6,7 @@ public class ball : MonoBehaviour {
     public int grid_x, grid_y,ball_index;
     SpriteRenderer spr_this;
     public bool is_moving = false;
-
+	Vector3 ball_position_when_clicked = Vector3.zero;
     public void create_ball(int x,int y,int index) {
         //parameters
         grid_x = x;
@@ -26,59 +26,68 @@ public class ball : MonoBehaviour {
 
     void OnMouseDown()
     {
-        gameObject.GetComponent<ball>().is_moving = true;
-       // print(gameObject.name + "is moving");
-        //GameObject[] all_balls = game_control.find_all_balls();
-        //foreach (GameObject ball in all_balls)
-        //{
-        //    if (ball.GetComponent<ball>().grid_y == gameObject.GetComponent<ball>().grid_y)
-        //    {
-        //        ball.GetComponent<ball>().is_moving = true;
-        //    }
-        //}
+		start_dragging_balls();
     }
 
-    void reset_is_moving_for_all_ball()
+	void start_dragging_balls() {
+
+		game_control.dragging_balls_active = true;
+		game_control.store_mouse_position_when_clicked();
+		ball.store_current_positions_off_all_balls();
+		set_row_movable(gameObject);
+	}
+
+	void set_row_movable(GameObject g) {
+		foreach (GameObject ball in game_control.all_balls()) {
+			if (ball.GetComponent<ball>().grid_y == g.GetComponent<ball>().grid_y) {
+				ball.GetComponent<ball>().is_moving = true;
+			}
+		}
+	}
+
+	public static void store_current_positions_off_all_balls() {
+		foreach (GameObject ball in game_control.all_balls()) {
+			game_control.get_ball(ball).ball_position_when_clicked = ball.transform.position;
+		}
+	}
+
+    void stop_dragging_balls()
     {
-        GameObject[] all_balls = game_control.find_all_balls();
-        foreach (GameObject ball in all_balls)
+		game_control.dragging_balls_active = false;
+		foreach (GameObject ball in game_control.all_balls()) {
+			game_control.get_ball(ball).ball_position_when_clicked = Vector3.zero;
+		}
+         foreach (GameObject ball in game_control.all_balls())
         {
             if (ball.GetComponent<ball>().is_moving)
             {
-                ball.GetComponent<ball>().is_moving = false;
+				game_control.ball_is_movable(ball, false);
                 //print(ball.name + "moving:" + ball.GetComponent<ball>().is_moving);
             }
-
         }
     }
 
     void OnMouseUp()
     {
-        //resetovanje misa
-          //  print("RESET " + gameObject.name);
-            reset_is_moving_for_all_ball();
+	    stop_dragging_balls();
     }
 
     void Update()
     {
 
-
-        GameObject[] all_balls = game_control.find_all_balls();
-        Vector3 mouse_position = new Vector3();
-
-        foreach (GameObject ball in all_balls)
+		//moving movable balls
+        foreach (GameObject ball in game_control.all_balls())
         {
-            if (ball.GetComponent<ball>().is_moving)
+            if (game_control.ball_is_movable(ball) && game_control.get_ball(ball).ball_position_when_clicked != Vector3.zero)
             {
-                 Vector3 mouse_pos = Input.mousePosition;
-                 Vector3 converted_mouse_pos = Camera.main.ScreenToWorldPoint(mouse_pos);
-                 converted_mouse_pos.z = -1;
-                 ball.transform.position = converted_mouse_pos;
-                                           
-                                           
-
-
+				ball.transform.position = game_control.get_ball(ball).ball_position_when_clicked + game_control.drag_offset;
             }
         }
     }
+
+
+
 }
+
+
+
