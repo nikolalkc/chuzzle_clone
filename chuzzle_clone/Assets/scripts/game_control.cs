@@ -2,37 +2,33 @@
 using System.Collections;
 
 public class game_control : MonoBehaviour {
-    public Transform grid_spawn_transform;
-    public int grid_width = 5;
-    public int grid_height = 7;
-    public float grid_spacing = 1f;
-    public GameObject test_ball;
+	public Transform grid_spawn_transform;
+	public int grid_width = 5;
+	public int grid_height = 7;
+	public float grid_spacing = 1f;
+	public GameObject test_ball;
 	public static Vector3 mouse_position_when_clicked;
 	public static bool dragging_balls_active = false;
 	public static Vector3 drag_offset;
-	void Start () {
-        generate_matrix();
+	void Start() {
+		generate_matrix();
 	}
 
-    void generate_matrix()
-    {
-        for (int i = 0; i < grid_width; i++)
-        {
-            for (int j = 0; j < grid_height; j++)
-            {
-                GameObject generic_ball = new GameObject();
-                int ball_index = (i*grid_width + j);
-                generic_ball.name = "ball_" + ball_index.ToString();
-                generic_ball.AddComponent<ball>().create_ball(i,j,ball_index);
-                generic_ball.transform.position = new Vector3(i * grid_spacing, j * grid_spacing, 0) + grid_spawn_transform.position;
-            }
-        }
-    }
+	void generate_matrix() {
+		for (int i = 0; i < grid_width; i++) {
+			for (int j = 0; j < grid_height; j++) {
+				GameObject generic_ball = new GameObject();
+				int ball_index = (i * grid_width + j);
+				generic_ball.name = "ball_" + ball_index.ToString();
+				generic_ball.AddComponent<ball>().create_ball(i, j, ball_index);
+				generic_ball.transform.position = new Vector3(i * grid_spacing, j * grid_spacing, 0) + grid_spawn_transform.position;
+			}
+		}
+	}
 
-    public static GameObject[] all_balls()
-    {
-        return GameObject.FindGameObjectsWithTag("ball");
-    }
+	public static GameObject[] all_balls() {
+		return GameObject.FindGameObjectsWithTag("ball");
+	}
 
 	public static Vector3 mouse_position() {
 		Vector3 converted_mouse_pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -60,7 +56,7 @@ public class game_control : MonoBehaviour {
 
 	void Update() {
 
-        //calculate drag offset
+		//calculate drag offset
 		if (Input.GetMouseButton(0)) {
 			float distance_x = game_control.mouse_position().x - mouse_position_when_clicked.x;
 			float distance_y = game_control.mouse_position().y - mouse_position_when_clicked.y;
@@ -73,8 +69,7 @@ public class game_control : MonoBehaviour {
 
 
 	//DEBUG SCREEN
-	void OnGUI()
-	{
+	void OnGUI() {
 		int w = Screen.width, h = Screen.height;
 		GUIStyle style = new GUIStyle();
 		Rect rect = new Rect(0, 0, w, h * 2 / 100);
@@ -83,8 +78,8 @@ public class game_control : MonoBehaviour {
 		style.normal.textColor = Color.cyan;
 
 		//stuff
-		string text = "Drag Offset: \n\tX:" + drag_offset.x + "\n\tY:" + drag_offset.y; 
-		
+		string text = "Drag Offset: \n\tX:" + drag_offset.x + "\n\tY:" + drag_offset.y;
+
 		//
 
 		GUI.Label(rect, text, style);
