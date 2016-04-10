@@ -10,6 +10,7 @@ public class game_control : MonoBehaviour {
 	public static Vector3 mouse_position_when_clicked;
 	public static bool dragging_balls_active = false;
 	public static Vector3 drag_offset;
+	public static Vector3 direction_to_move_balls = Vector3.one;	//mnozi se sa distance offsetom
 	void Start() {
 		generate_matrix();
 	}

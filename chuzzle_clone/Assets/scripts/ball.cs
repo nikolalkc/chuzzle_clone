@@ -63,10 +63,11 @@ public class ball : MonoBehaviour {
 		game_control.dragging_balls_active = true;
 		game_control.store_mouse_position_when_clicked();
 		ball.store_current_positions_off_all_balls();
-		set_line_movable(gameObject, 1);
+		set_line_movable(gameObject, 0);
 	}
 
 	void set_line_movable(GameObject compared_ball, int line_type) {
+		//ukljucivanje is movable parametra
 		foreach (GameObject current_ball in game_control.all_balls()) {
 			//0 = row
 			if (line_type == 0) {
@@ -81,6 +82,16 @@ public class ball : MonoBehaviour {
 				}
 			}
 		}
+
+		//namestanje pravca kretanja
+		//row
+		if (line_type == 0) {
+			game_control.direction_to_move_balls = new Vector3(1, 0, 0);	//da se pomera samo po x osi
+		}
+		//col
+		if (line_type == 1) {
+			game_control.direction_to_move_balls = new Vector3(0, 1, 0);	//da se pomera samo po y osi
+		}
 	}
 
 
@@ -93,10 +104,12 @@ public class ball : MonoBehaviour {
 		//move movable balls
 		if (game_control.dragging_balls_active) {
 			foreach (GameObject ball in game_control.all_balls()) {
-				if (game_control.ball_is_movable(ball) /*&& game_control.get_ball(ball).ball_position_when_clicked != Vector3.zero*/ ) {
-					ball.transform.position = game_control.get_ball(ball)
-					.ball_position_when_clicked
-					+ game_control.drag_offset;
+				if (game_control.ball_is_movable(ball)) {
+
+					Vector3 start_ball_position = game_control.get_ball(ball).ball_position_when_clicked;
+					Vector3 offset = Vector3.Scale(game_control.drag_offset,game_control.direction_to_move_balls);	//drag offset + pravac (x ili y)
+					ball.transform.position = start_ball_position + offset;
+					
 				}
 			}
 		}
