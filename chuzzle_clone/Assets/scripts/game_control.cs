@@ -64,8 +64,6 @@ public class game_control : MonoBehaviour {
 			//print("X:" + distance_x + " Y:" + distance_y);
 			drag_offset = new Vector3(distance_x, distance_y, 0);
 		}
-
-
 	}
 
 
