@@ -109,7 +109,7 @@ public class game_control : MonoBehaviour {
 		Rect rect = new Rect(0, 0, w, h * 2 / 100);
 		style.alignment = TextAnchor.UpperLeft;
 		style.fontSize = h * 2 / 100;
-		style.normal.textColor = Color.cyan;
+		style.normal.textColor = Color.green;
 		string clicked_ball_name ="";
 		if (clicked_ball != null) {
 			clicked_ball_name = clicked_ball.name;

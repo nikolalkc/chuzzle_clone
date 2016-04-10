@@ -73,7 +73,7 @@ public class ball : MonoBehaviour {
 	void start_dragging_balls(int direction) {
 		game_control.dragging_balls_active = true;
 		ball.store_current_positions_off_all_balls();
-		set_line_movable(gameObject, direction);
+		set_line_movable(game_control.clicked_ball, direction);
 	}
 
 	void set_line_movable(GameObject compared_ball, int line_type) {
