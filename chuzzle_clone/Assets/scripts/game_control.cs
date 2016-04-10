@@ -11,6 +11,13 @@ public class game_control : MonoBehaviour {
 	public static bool dragging_balls_active = false;
 	public static Vector3 drag_offset;
 	public static Vector3 direction_to_move_balls = Vector3.one;	//MNOZI SE SA DISTANCE OFFSETOM
+	public static bool start_dragging_balls = false;
+	public static GameObject clicked_ball = null;
+
+	public static bool calculating_direction_active = false;
+	public enum direction { none, horizontal, vertical }
+	public static direction moving_direction = direction.none;
+
 	void Start() {
 		generate_matrix();
 	}
@@ -26,7 +33,7 @@ public class game_control : MonoBehaviour {
 			}
 		}
 	}
-	
+
 	//GET ALL BALLS ARRAY
 	public static GameObject[] all_balls() {
 		return GameObject.FindGameObjectsWithTag("ball");
@@ -60,15 +67,37 @@ public class game_control : MonoBehaviour {
 		mouse_position_when_clicked = game_control.mouse_position();
 	}
 
+	//CALCULATE DIRECTION TO MOVE BALLS
+	void calculate_direction() {
+		if (drag_offset.x != 0 || drag_offset.y != 0) {
+			calculating_direction_active = false;
+			if (Mathf.Abs(drag_offset.x) > Mathf.Abs(drag_offset.y)) {	//ako je x vece
+				game_control.moving_direction = direction.horizontal;
+			}
+			else if (Mathf.Abs(drag_offset.x) < Mathf.Abs(drag_offset.y)) { //ako je y vece
+				game_control.moving_direction = direction.vertical;
+			}
+			start_dragging_balls = true;
+		}
+	}
 
 	void Update() {
 
+		//RESET DRAG OFFSET
+		if (Input.GetMouseButtonUp(0)) {
+			drag_offset = Vector3.zero;
+		}
 		//CALCULATE DRAG OFFSET
 		if (Input.GetMouseButton(0)) {
 			float distance_x = game_control.mouse_position().x - mouse_position_when_clicked.x;
 			float distance_y = game_control.mouse_position().y - mouse_position_when_clicked.y;
 			//print("X:" + distance_x + " Y:" + distance_y);
 			drag_offset = new Vector3(distance_x, distance_y, 0);
+		}
+
+		//CALCULATE DIRECTION
+		if (calculating_direction_active) {
+			calculate_direction();
 		}
 	}
 
@@ -81,9 +110,17 @@ public class game_control : MonoBehaviour {
 		style.alignment = TextAnchor.UpperLeft;
 		style.fontSize = h * 2 / 100;
 		style.normal.textColor = Color.cyan;
-
+		string clicked_ball_name ="";
+		if (clicked_ball != null) {
+			clicked_ball_name = clicked_ball.name;
+		}
 		//STUFF
-		string text = "Drag Offset: \n\tX:" + drag_offset.x + "\n\tY:" + drag_offset.y;
+		string text =	"Mouse Position:" + mouse_position() +
+						"\nMouse Pos WHEN CLICKED:" + mouse_position_when_clicked +
+						"\nDrag Offset: \n\tX:" + drag_offset.x + "\n\tY:" + drag_offset.y +
+						"\nCalulating_direction_active:" + calculating_direction_active +
+						"\nMoving_direction:" + moving_direction.ToString() +
+						"\nClicked Ball:" + clicked_ball_name;
 
 		//
 

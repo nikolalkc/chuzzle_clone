@@ -33,7 +33,9 @@ public class ball : MonoBehaviour {
 	}
 
 	void stop_dragging_balls() {
+		game_control.moving_direction = game_control.direction.none;
 		game_control.dragging_balls_active = false;
+		game_control.mouse_position_when_clicked = Vector3.zero;
 
 		//resetuj sacuvane pozicije
 		foreach (GameObject ball in game_control.all_balls()) {
@@ -46,24 +48,32 @@ public class ball : MonoBehaviour {
 				game_control.ball_is_movable(ball, false);
 			}
 		}
+
+		//resetuj direction vektor
+		game_control.direction_to_move_balls = Vector3.one;
 	}
 
 	void OnMouseUp() {
+		game_control.clicked_ball = null;
 		stop_dragging_balls();
 	}
 	#endregion
 
 
-
 	void OnMouseDown() {
-		start_dragging_balls();
+		game_control.clicked_ball = gameObject;
+		game_control.store_mouse_position_when_clicked();
+
+		if (game_control.moving_direction == game_control.direction.none) {
+			game_control.calculating_direction_active = true;
+		}
 	}
 
-	void start_dragging_balls() {
+
+	void start_dragging_balls(int direction) {
 		game_control.dragging_balls_active = true;
-		game_control.store_mouse_position_when_clicked();
 		ball.store_current_positions_off_all_balls();
-		set_line_movable(gameObject, 0);
+		set_line_movable(gameObject, direction);
 	}
 
 	void set_line_movable(GameObject compared_ball, int line_type) {
@@ -94,13 +104,21 @@ public class ball : MonoBehaviour {
 		}
 	}
 
-
-
-
-
-
-
 	void Update() {
+
+		//start moving
+		if (game_control.start_dragging_balls) {
+			if (game_control.moving_direction == game_control.direction.horizontal) {
+				start_dragging_balls(0);
+			}
+			else {
+				if (game_control.moving_direction == game_control.direction.vertical) {
+						start_dragging_balls(1);
+				}
+			}
+			game_control.start_dragging_balls = false;
+		}
+
 		//move movable balls
 		if (game_control.dragging_balls_active) {
 			foreach (GameObject ball in game_control.all_balls()) {
