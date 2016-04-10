@@ -59,12 +59,35 @@ public class game_control : MonoBehaviour {
 
 
 	void Update() {
-		if (dragging_balls_active) {
+
+        //calculate drag offset
+		if (Input.GetMouseButton(0)) {
 			float distance_x = game_control.mouse_position().x - mouse_position_when_clicked.x;
 			float distance_y = game_control.mouse_position().y - mouse_position_when_clicked.y;
 			//print("X:" + distance_x + " Y:" + distance_y);
 			drag_offset = new Vector3(distance_x, distance_y, 0);
 		}
+
+
+	}
+
+
+	//DEBUG SCREEN
+	void OnGUI()
+	{
+		int w = Screen.width, h = Screen.height;
+		GUIStyle style = new GUIStyle();
+		Rect rect = new Rect(0, 0, w, h * 2 / 100);
+		style.alignment = TextAnchor.UpperLeft;
+		style.fontSize = h * 2 / 100;
+		style.normal.textColor = Color.cyan;
+
+		//stuff
+		string text = "Drag Offset: \n\tX:" + drag_offset.x + "\n\tY:" + drag_offset.y; 
+		
+		//
+
+		GUI.Label(rect, text, style);
 	}
 
 
