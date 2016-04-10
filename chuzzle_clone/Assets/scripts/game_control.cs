@@ -10,7 +10,7 @@ public class game_control : MonoBehaviour {
 	public static Vector3 mouse_position_when_clicked;
 	public static bool dragging_balls_active = false;
 	public static Vector3 drag_offset;
-	public static Vector3 direction_to_move_balls = Vector3.one;	//mnozi se sa distance offsetom
+	public static Vector3 direction_to_move_balls = Vector3.one;	//MNOZI SE SA DISTANCE OFFSETOM
 	void Start() {
 		generate_matrix();
 	}
@@ -26,11 +26,13 @@ public class game_control : MonoBehaviour {
 			}
 		}
 	}
-
+	
+	//GET ALL BALLS ARRAY
 	public static GameObject[] all_balls() {
 		return GameObject.FindGameObjectsWithTag("ball");
 	}
 
+	//RETURN MOUSE WORLD POSITION
 	public static Vector3 mouse_position() {
 		Vector3 converted_mouse_pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 		converted_mouse_pos.z = -1;
@@ -38,18 +40,22 @@ public class game_control : MonoBehaviour {
 		return converted_mouse_pos;
 	}
 
+	//GET BALL COMPONENT OF GAMEOBJECT
 	public static ball get_ball(GameObject g) {
 		return g.GetComponent<ball>();
 	}
 
+	//SET BALL_IS_MOVABLE PARAMETER
 	public static void ball_is_movable(GameObject ball, bool is_movable) {
 		game_control.get_ball(ball).is_moving = is_movable;
 	}
 
+	//GET BALL_IS_MOVABLE PARAMETER
 	public static bool ball_is_movable(GameObject ball) {
 		return game_control.get_ball(ball).is_moving;
 	}
 
+	//STORE WORLD MOUSE POSITION WHEN MOUSE IS CLICKED
 	public static void store_mouse_position_when_clicked() {
 		mouse_position_when_clicked = game_control.mouse_position();
 	}
@@ -57,7 +63,7 @@ public class game_control : MonoBehaviour {
 
 	void Update() {
 
-		//calculate drag offset
+		//CALCULATE DRAG OFFSET
 		if (Input.GetMouseButton(0)) {
 			float distance_x = game_control.mouse_position().x - mouse_position_when_clicked.x;
 			float distance_y = game_control.mouse_position().y - mouse_position_when_clicked.y;
@@ -76,7 +82,7 @@ public class game_control : MonoBehaviour {
 		style.fontSize = h * 2 / 100;
 		style.normal.textColor = Color.cyan;
 
-		//stuff
+		//STUFF
 		string text = "Drag Offset: \n\tX:" + drag_offset.x + "\n\tY:" + drag_offset.y;
 
 		//
