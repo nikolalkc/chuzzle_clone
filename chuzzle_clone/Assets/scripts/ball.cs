@@ -33,6 +33,10 @@ public class ball : MonoBehaviour {
 	}
 
 	void stop_dragging_balls() {
+		//do the snapping
+		snapping(game_control.drag_offset, game_control.moving_direction, false);
+
+		//resetuj parametre
 		game_control.moving_direction = game_control.direction.none;
 		game_control.dragging_balls_active = false;
 		game_control.mouse_position_when_clicked = Vector3.zero;
@@ -59,7 +63,48 @@ public class ball : MonoBehaviour {
 	}
 	#endregion
 
+	void snapping(Vector3 offset, game_control.direction direction,bool call_from_update) {
 
+		float half_spacing = game_control._grid_spacing / 2;
+
+		//setovanje  distance
+		float distance_from_start_position = 0;
+		if (direction == game_control.direction.horizontal) {
+			distance_from_start_position = offset.x;
+		}
+		else if (direction == game_control.direction.vertical) {
+			distance_from_start_position = offset.y;
+		}
+
+		//setovanje pomeraja od grida
+		float grid_offset = Mathf.Abs(distance_from_start_position % 1);
+
+		//
+		if (call_from_update) {
+			//provera dal je otisao preko pola
+			if (grid_offset > half_spacing) {
+				game_control.debug_snapping_string = "NEXT";
+			}
+			else {
+				game_control.debug_snapping_string = "PREVIOUS";
+			}
+		}
+		else {
+			//ACTUAL SNAPPING WHEN MOUSE IS UP
+			if (game_control.debug_snapping_string == "NEXT") {
+				//snappuj u pravcu pomeraja napred
+				//+ (grid_spacing-grid_offset)
+			}
+			else if (game_control.debug_snapping_string == "PREVIOUS") {
+				//snappuj u pravcu pomeraja nazad
+				//-grid_offset
+			}
+
+		}
+
+		
+
+	}
 	void OnMouseDown() {
 		game_control.clicked_ball = gameObject;
 		game_control.store_mouse_position_when_clicked();
@@ -131,6 +176,10 @@ public class ball : MonoBehaviour {
 				}
 			}
 		}
+
+
+		//snapuj loptice na pravo mesto
+		snapping(game_control.drag_offset, game_control.moving_direction,true);
 	}
 
 

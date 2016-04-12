@@ -6,6 +6,7 @@ public class game_control : MonoBehaviour {
 	public int grid_width = 5;
 	public int grid_height = 7;
 	public float grid_spacing = 1f;
+	public static float _grid_spacing;
 	public GameObject test_ball;
 	public static Vector3 mouse_position_when_clicked;
 	public static bool dragging_balls_active = false;
@@ -13,12 +14,14 @@ public class game_control : MonoBehaviour {
 	public static Vector3 direction_to_move_balls = Vector3.one;	//MNOZI SE SA DISTANCE OFFSETOM
 	public static bool start_dragging_balls = false;
 	public static GameObject clicked_ball = null;
+	public static string debug_snapping_string;
 
 	public static bool calculating_direction_active = false;
 	public enum direction { none, horizontal, vertical }
 	public static direction moving_direction = direction.none;
 
 	void Start() {
+		_grid_spacing = grid_spacing;
 		generate_matrix();
 	}
 
@@ -115,12 +118,13 @@ public class game_control : MonoBehaviour {
 			clicked_ball_name = clicked_ball.name;
 		}
 		//STUFF
-		string text =	"Mouse Position:" + mouse_position() +
+		string text = "Mouse Position:" + mouse_position() +
 						"\nMouse Pos WHEN CLICKED:" + mouse_position_when_clicked +
 						"\nDrag Offset: \n\tX:" + drag_offset.x + "\n\tY:" + drag_offset.y +
 						"\nCalulating_direction_active:" + calculating_direction_active +
 						"\nMoving_direction:" + moving_direction.ToString() +
-						"\nClicked Ball:" + clicked_ball_name;
+						"\nClicked Ball:" + clicked_ball_name +
+						"\nSnap to: " + debug_snapping_string;
 
 		//
 
